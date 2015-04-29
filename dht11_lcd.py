@@ -197,7 +197,7 @@ while True :
             continue
 
         humid_str = str(round(genzai[0], 1))
-        temp_str = str(round(genzai[0], 1))
+        temp_str = str(round(genzai[1], 1))
         print "formatted temp_str and humid_str before the lcd.message function is called.  " , temp_str , "  " , humid_str
 
         lcd.message("Temp :  " + temp_str + " oC \nHumid : " + humid_str + " %  " )
