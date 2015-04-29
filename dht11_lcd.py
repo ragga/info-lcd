@@ -174,12 +174,17 @@ dhtpin = 25
 
 print "Temp sensor connected to bcm gpio pin # ", dhtpin
 
+try:
+    print "Initialize LCD"
+    lcd = Generic_LCD()
+    lcd.clear()
+except:
+    print "Error: ", sys.exc_info()[0]
+    exit
+
+
 while True :
     try:
-        print "Initialize LCD"
-        lcd = Generic_LCD()
-        lcd.clear()
-
         print  "Let's start with a dht.read() "
         genzai = Adafruit_DHT.read_retry(dev_type, dhtpin)
         if  genzai :
@@ -258,17 +263,18 @@ while True :
 
         lcd.clear()
         lcd.message("IPv4 addr " + "\n" + my_ipaddresses)
-        time.sleep(3)
+        time.sleep(2)
 
         print  "Back from the nap and ready to start at the beginning again"
         print  "  "
 
     except KeyboardInterrupt:
         GPIO.cleanup()
-        print  "Interrupted at", datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S")  
+        print  "Interrupted at", datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S")
         break
 
     except:
+        print "Error: ", sys.exc_info()[0]
         break
 
 print "Shutdown"
