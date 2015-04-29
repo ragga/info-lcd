@@ -167,7 +167,7 @@ DHT11 = 11
 DHT22 = 22
 M2302 = 2302
 
-dev_type = DHT11
+dev_type = DHT12
 
 #   pin 25  in the BCM GPIO system
 dhtpin = 25
