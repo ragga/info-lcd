@@ -163,11 +163,11 @@ class Generic_LCD:
 my_ipaddresses = os.popen("/sbin/ip addr show | awk /inet.*eth/'{print $2}'").read()
 print "My ip address is :", my_ipaddresses
 
-DHT11 = 11
-DHT22 = 22
-M2302 = 2302
+DHT11 = Adafruit_DHT.DHT11
+DHT22 = Adafruit_DHT.DHT22
+M2302 = Adafruit_DHT.AM2302
 
-dev_type = DHT12
+dev_type = M2302
 
 #   pin 25  in the BCM GPIO system
 dhtpin = 25
@@ -196,23 +196,18 @@ while True :
             time.sleep(1.5)
             continue
 
+        humid_str = str(round(genzai[0], 1))
         temp_str = str(round(genzai[0], 1))
-        humid_str = str(round(genzai[1] + 20, 1)) # HACK: the DHT11 is about 20% off on the RH scale
         print "formatted temp_str and humid_str before the lcd.message function is called.  " , temp_str , "  " , humid_str
 
         lcd.message("Temp :  " + temp_str + " oC \nHumid : " + humid_str + " %  " )
-
-        fTemp = float(round(genzai[0], 1))
-        fHumid = float(round(genzai[1], 1))
-        print  fTemp , "  " , fHumid   , "  just acquired and sent temp and humid message to the LCD , take 5 !   "
-
         time.sleep(3)
 
         # should probably check for sane value here
         now = datetime.datetime.now()
 
         if  now :
-            print now.strftime("%H : %M : %S  -  %m / %d / %Y ")
+            print now.strftime("%Y/%m/%d %H:%M:%S")
             lcd.clear()
         else:
             print "Got a bad datetime "
